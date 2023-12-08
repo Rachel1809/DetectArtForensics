@@ -11,5 +11,4 @@ scikit-learn
 tensorboard
 tensorboardX
 tqdm
-mpi4py
 blobfile>=1.0.5
