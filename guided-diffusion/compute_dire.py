@@ -149,9 +149,9 @@ def main():
 
 def create_argparser():
     defaults = dict(
-        images_dir="/data2/wangzd/dataset/DiffusionForensics/images",
-        recons_dir="/data2/wangzd/dataset/DiffusionForensics/recons",
-        dire_dir="/data2/wangzd/dataset/DiffusionForensics/dire",
+        images_dir="/kaggle/working/dataset/images",
+        recons_dir="/kaggle/working/dataset/recons",
+        dire_dir="/kaggle/working/dataset/dire",
         clip_denoised=True,
         num_samples=-1,
         batch_size=16,
