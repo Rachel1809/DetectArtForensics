@@ -4,7 +4,7 @@ export NCCL_P2P_DISABLE=1
 MODEL_PATH="/kaggle/input/classifier-ckpt/256x256_diffusion_uncond.pt" # "models/lsun_bedroom.pt, models/256x256_diffusion_uncond.pt"
 
 SAMPLE_FLAGS="--batch_size 8 --num_samples 1000  --timestep_respacing ddim20 --use_ddim True"
-SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/test/real --recons_dir /kaggle/working/dataset/recons_test/real --dire_dir /kaggle/working/dataset/dire_test/real"
+SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/test/real --recons_dir /kaggle/working/dataset/recons/test --dire_dir /kaggle/working/dataset/dire_test"
 
 #SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/test/fake --recons_dir /kaggle/working/dataset/recons_test/fake --dire_dir /kaggle/working/dataset/dire_test/fake"
 
@@ -13,4 +13,4 @@ MODEL_FLAGS="--attention_resolutions 32,16,8 --class_cond False --diffusion_step
 
 export CUDA_VISIBLE_DEVICES=0
 
-python /kaggle/working/DetectArtForensics/guided-diffusion/compute_dire.py --model_path $MODEL_PATH $MODEL_FLAGS  $SAVE_FLAGS $SAMPLE_FLAGS --has_subfolder True
+python /kaggle/working/DetectArtForensics/guided-diffusion/compute_dire.py --model_path $MODEL_PATH $MODEL_FLAGS  $SAVE_FLAGS $SAMPLE_FLAGS --has_subfolder False
