@@ -57,7 +57,7 @@ def validate(model: nn.Module, cfg: CONFIGCLASS):
     print("Y_pred", y_pred)
     index_min = y_pred.argmin()
     print(len(y_pred[y_pred <= 0.5]), len(y_pred[y_pred > 0.5]))
-    print(len(y_pred > 0.5))
+    print(y_pred > 0.5)
     r_acc = accuracy_score(y_true[y_true == 0], y_pred[y_true == 0] <= 0.5)
     f_acc = accuracy_score(y_true[y_true == 1], y_pred[y_true == 1] > 0.5)
     acc = accuracy_score(y_true, y_pred > 0.5)
