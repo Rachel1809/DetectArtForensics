@@ -1,7 +1,7 @@
 #!/bin/bash
 ### make sure that you have modified the EXP_NAME, CKPT, DATASETS_TEST
-eval "$(conda shell.bash hook)"
-conda activate dire
+#eval "$(conda shell.bash hook)"
+#conda activate dire
 
 EXP_NAME="model_adm_imagenet"
 CKPT="/kaggle/input/classifier-ckpt/imagenet_adm.pth"
