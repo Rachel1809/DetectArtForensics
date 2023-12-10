@@ -9,9 +9,9 @@ SAMPLE_FLAGS="--batch_size 8 --num_samples 760  --timestep_respacing ddim20 --us
 #SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/test/fake --recons_dir /kaggle/working/dataset/recons/test/fake --dire_dir /kaggle/working/dataset/dire/test/1_fake"
 
 #SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/val/real --recons_dir /kaggle/working/dataset/recons/val/real --dire_dir /kaggle/working/dataset/dire/val/0_real"
-SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/val/fake --recons_dir /kaggle/working/dataset/recons/val/fake --dire_dir /kaggle/working/dataset/dire/val/1_fake"
+#SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/val/fake --recons_dir /kaggle/working/dataset/recons/val/fake --dire_dir /kaggle/working/dataset/dire/val/1_fake"
 
-#SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/train/real --recons_dir /kaggle/working/dataset/recons/train/real --dire_dir /kaggle/working/dataset/dire/train/0_real"
+SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/train/real --recons_dir /kaggle/working/dataset/recons/train/real --dire_dir /kaggle/working/dataset/dire/train/0_real"
 #SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/train/fake --recons_dir /kaggle/working/dataset/recons/train/fake --dire_dir /kaggle/working/dataset/dire/train/1_fake"
 
 
