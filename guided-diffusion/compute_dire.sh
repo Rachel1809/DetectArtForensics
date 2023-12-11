@@ -3,7 +3,7 @@ export CUDA_VISIBLE_DEVICES=3,4,6,7
 export NCCL_P2P_DISABLE=1
 MODEL_PATH="/kaggle/input/classifier-ckpt/256x256_diffusion_uncond.pt" # "models/lsun_bedroom.pt, models/256x256_diffusion_uncond.pt"
 
-SAMPLE_FLAGS="--batch_size 8 --num_samples 760  --timestep_respacing ddim20 --use_ddim True"
+SAMPLE_FLAGS="--batch_size 8 --num_samples 3536  --timestep_respacing ddim20 --use_ddim True"
 #SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/test/real --recons_dir /kaggle/working/dataset/recons/test/real --dire_dir /kaggle/working/dataset/dire/test/0_real"
 
 #SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/test/fake --recons_dir /kaggle/working/dataset/recons/test/fake --dire_dir /kaggle/working/dataset/dire/test/1_fake"
