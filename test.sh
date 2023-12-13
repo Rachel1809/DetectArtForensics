@@ -4,6 +4,6 @@
 #conda activate dire
 
 EXP_NAME="model_adm_imagenet"
-CKPT="/kaggle/input/classifier-ckpt/lsun_iddpm.pth"
+CKPT="/kaggle/input/classifier-ckpt/lsun_pndm.pth"
 DATASETS_TEST="dire/test"
 python test.py --gpus 0 --ckpt $CKPT --exp_name $EXP_NAME datasets_test $DATASETS_TEST
