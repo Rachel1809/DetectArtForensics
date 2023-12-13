@@ -54,15 +54,15 @@ def validate(model: nn.Module, cfg: CONFIGCLASS):
 
     y_true, y_pred = np.array(y_true), np.array(y_pred)
 
-    TP_idx = np.argmin(y_pred[y_true == 0] > 0.5)
-    FN_idx = np.argmax(y_pred[y_true == 0] > 0.5)
-    TN_idx = np.argmax(y_pred[y_true == 1] > 0.5)
-    FP_idx = np.argmin(y_pred[y_true == 1] > 0.5)
+    TP_idx = np.argmin([y_pred[y_true == 0] > 0.5])
+    FN_idx = np.argmax([y_pred[y_true == 0] > 0.5])
+    TN_idx = np.argmax([y_pred[y_true == 1] > 0.5])
+    FP_idx = np.argmin([y_pred[y_true == 1] > 0.5])
     
-    print(f"True Positive index: {TP_idx} | {y_true[TP_idx]}, {y_pred[TP_idx]}")
-    print(f"False Positive index: {FP_idx} | {y_true[FP_idx]}, {y_pred[FP_idx]}")
-    print(f"True Negative index: {TN_idx} | {y_true[TN_idx]}, {y_pred[TN_idx]}")
-    print(f"False Negative index: {FN_idx} | {y_true[FN_idx]}, {y_pred[FN_idx]}")
+    print(f"True Positive index: {TP_idx} | {y_true[y_true == 0][TP_idx]}, {y_pred[y_true == 0][TP_idx]}")
+    print(f"False Positive index: {FP_idx} | {y_true[y_true == 1][FP_idx]}, {y_pred[y_true == 1][FP_idx]}")
+    print(f"True Negative index: {TN_idx} | {y_true[y_true == 1][TN_idx]}, {y_pred[y_true == 1][TN_idx]}")
+    print(f"False Negative index: {FN_idx} | {y_true[y_true == 0][FN_idx]}, {y_pred[y_true == 0][FN_idx]}")
     
     
     r_acc = accuracy_score(y_true[y_true == 0], y_pred[y_true == 0] > 0.5)
