@@ -13,8 +13,8 @@ from utils.trainer import Trainer
 from utils.utils import Logger
 
 if __name__ == "__main__":
-    val_cfg = get_val_cfg(cfg, split="val", copy=True)
-    cfg.dataset_root = os.path.join(cfg.dataset_root, "train")
+    val_cfg = get_val_cfg(cfg, split="val/", copy=True)
+    cfg.dataset_root = os.path.join(cfg.dataset_root, "train/")
 
     data_loader = create_dataloader(cfg)
     dataset_size = len(data_loader)

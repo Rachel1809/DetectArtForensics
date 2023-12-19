@@ -8,7 +8,7 @@ import torch
 from utils.eval import get_val_cfg, validate
 from utils.utils import get_network
 
-cfg = get_val_cfg(cfg, split="test", copy=False)
+cfg = get_val_cfg(cfg, split="test/", copy=False)
 
 assert cfg.ckpt_path, "Please specify the path to the model checkpoint"
 model_name = os.path.basename(cfg.ckpt_path).replace(".pth", "")
