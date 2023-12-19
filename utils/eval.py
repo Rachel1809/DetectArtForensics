@@ -17,9 +17,9 @@ def get_val_cfg(cfg: CONFIGCLASS, split="val", copy=True):
         val_cfg = deepcopy(cfg)
     else:
         val_cfg = cfg
+    print(val_cfg.datasets_root)
     #val_cfg.dataset_root = os.path.join(val_cfg.dataset_root)
-    print(f"{cfg.datasets_test} / {split}")
-    val_cfg.datasets = os.path.join(cfg.datasets_test, split)
+    val_cfg.datasets = os.path.join(cfg.datasets_test)
     val_cfg.isTrain = False
     # val_cfg.aug_resize = False
     # val_cfg.aug_crop = False
