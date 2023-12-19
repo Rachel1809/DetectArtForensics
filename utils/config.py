@@ -59,7 +59,7 @@ class DefaultConfigs(ABC):
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     kaggle_dir = "/kaggle/working/"
     dataset_root = os.path.join(kaggle_dir, "dataset")
-    exp_root = os.path.join(root_dir, "data", "exp")
+    exp_root = os.path.join(root_dir, "dataset", "exp")
     _exp_name = ""
     exp_dir = ""
     ckpt_dir = ""
