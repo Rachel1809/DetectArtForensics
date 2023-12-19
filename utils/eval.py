@@ -17,7 +17,7 @@ def get_val_cfg(cfg: CONFIGCLASS, split="val", copy=True):
         val_cfg = deepcopy(cfg)
     else:
         val_cfg = cfg
-    print(val_cfg.datasets_root)
+    print(val_cfg.dataset_root)
     #val_cfg.dataset_root = os.path.join(val_cfg.dataset_root)
     val_cfg.datasets = os.path.join(cfg.datasets_test)
     val_cfg.isTrain = False
