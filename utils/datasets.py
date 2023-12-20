@@ -63,7 +63,7 @@ def binary_dataset(root: str, cfg: CONFIGCLASS):
                 flip_func,
                 transforms.ToTensor(),
                 #transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                transforms.Normalize(mean=[0.485, 0.485, 0.485], std=[0.229, 0.229, 0.229])
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                 if cfg.aug_norm
                 else identity_transform,
             ]
