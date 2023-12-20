@@ -168,7 +168,7 @@ def get_bal_sampler(dataset: torch.utils.data.ConcatDataset):
 def create_dataloader(cfg: CONFIGCLASS):
     shuffle = not cfg.serial_batches if (cfg.isTrain and not cfg.class_bal) else False
     dataset = get_dataset(cfg)
-    sampler = get_bal_sampler(dataset) if cfg.class_bal else None
+    sampler = get_bal_sampler(dataset=dataset) if cfg.class_bal else None
 
     return torch.utils.data.DataLoader(
         dataset,

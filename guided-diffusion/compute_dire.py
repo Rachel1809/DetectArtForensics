@@ -79,71 +79,72 @@ def main():
         imgs, out_dicts, paths = next(data)
         imgs = imgs[:batch_size]
         paths = paths[:batch_size]
+        if have_finished_images > 1712:
+            imgs = imgs.to(dist_util.dev())
+            model_kwargs = {}
+            if args.class_cond:
+                classes = th.randint(low=0, high=NUM_CLASSES, size=(batch_size,), device=dist_util.dev())
+                model_kwargs["y"] = classes
+            reverse_fn = diffusion.ddim_reverse_sample_loop
+            imgs = reshape_image(imgs, args.image_size)
 
-        imgs = imgs.to(dist_util.dev())
-        model_kwargs = {}
-        if args.class_cond:
-            classes = th.randint(low=0, high=NUM_CLASSES, size=(batch_size,), device=dist_util.dev())
-            model_kwargs["y"] = classes
-        reverse_fn = diffusion.ddim_reverse_sample_loop
-        imgs = reshape_image(imgs, args.image_size)
-
-        latent = reverse_fn(
-            model,
-            (batch_size, 3, args.image_size, args.image_size),
-            noise=imgs,
-            clip_denoised=args.clip_denoised,
-            model_kwargs=model_kwargs,
-            real_step=args.real_step,
-        )
-        sample_fn = diffusion.p_sample_loop if not args.use_ddim else diffusion.ddim_sample_loop
-        recons = sample_fn(
-            model,
-            (batch_size, 3, args.image_size, args.image_size),
-            noise=latent,
-            clip_denoised=args.clip_denoised,
-            model_kwargs=model_kwargs,
-            real_step=args.real_step,
-        )
-
-        dire = th.abs(imgs - recons)
-        recons = ((recons + 1) * 127.5).clamp(0, 255).to(th.uint8)
-        recons = recons.permute(0, 2, 3, 1)
-        recons = recons.contiguous()
-
-        imgs = ((imgs + 1) * 127.5).clamp(0, 255).to(th.uint8)
-        imgs = imgs.permute(0, 2, 3, 1)
-        imgs = imgs.contiguous()
-
-        dire = (dire * 255.0 / 2.0).clamp(0, 255).to(th.uint8)
-        dire = dire.permute(0, 2, 3, 1)
-        dire = dire.contiguous()
-
-        gathered_samples = [th.zeros_like(recons) for _ in range(dist.get_world_size())]
-        dist.all_gather(gathered_samples, recons)  # gather not supported with NCCL
-
-        all_images.extend([sample.cpu().numpy() for sample in gathered_samples])
-        if args.class_cond:
-            gathered_labels = [th.zeros_like(classes) for _ in range(dist.get_world_size())]
-            dist.all_gather(gathered_labels, classes)
-            all_labels.extend([labels.cpu().numpy() for labels in gathered_labels])
-        have_finished_images += len(all_images) * batch_size
-        # print(th.mean(res.float()))
-        recons = recons.cpu().numpy()
-        for i in range(len(recons)):
-            if args.has_subfolder:
-                recons_save_dir = os.path.join(args.recons_dir, paths[i].split("/")[-2])
-                dire_save_dir = os.path.join(args.dire_dir, paths[i].split("/")[-2])
-            else:
-                recons_save_dir = args.recons_dir
-                dire_save_dir = args.dire_dir
-            fn_save = os.path.basename(paths[i])
-            os.makedirs(recons_save_dir, exist_ok=True)
-            os.makedirs(dire_save_dir, exist_ok=True)
-            cv2.imwrite(
-                f"{dire_save_dir}/{fn_save}", cv2.cvtColor(dire[i].cpu().numpy().astype(np.uint8), cv2.COLOR_RGB2BGR)
+            latent = reverse_fn(
+                model,
+                (batch_size, 3, args.image_size, args.image_size),
+                noise=imgs,
+                clip_denoised=args.clip_denoised,
+                model_kwargs=model_kwargs,
+                real_step=args.real_step,
             )
-            cv2.imwrite(f"{recons_save_dir}/{fn_save}", cv2.cvtColor(recons[i].astype(np.uint8), cv2.COLOR_RGB2BGR))
+            sample_fn = diffusion.p_sample_loop if not args.use_ddim else diffusion.ddim_sample_loop
+            recons = sample_fn(
+                model,
+                (batch_size, 3, args.image_size, args.image_size),
+                noise=latent,
+                clip_denoised=args.clip_denoised,
+                model_kwargs=model_kwargs,
+                real_step=args.real_step,
+            )
+
+            dire = th.abs(imgs - recons)
+            recons = ((recons + 1) * 127.5).clamp(0, 255).to(th.uint8)
+            recons = recons.permute(0, 2, 3, 1)
+            recons = recons.contiguous()
+
+            imgs = ((imgs + 1) * 127.5).clamp(0, 255).to(th.uint8)
+            imgs = imgs.permute(0, 2, 3, 1)
+            imgs = imgs.contiguous()
+
+            dire = (dire * 255.0 / 2.0).clamp(0, 255).to(th.uint8)
+            dire = dire.permute(0, 2, 3, 1)
+            dire = dire.contiguous()
+
+            gathered_samples = [th.zeros_like(recons) for _ in range(dist.get_world_size())]
+            dist.all_gather(gathered_samples, recons)  # gather not supported with NCCL
+
+            all_images.extend([sample.cpu().numpy() for sample in gathered_samples])
+            if args.class_cond:
+                gathered_labels = [th.zeros_like(classes) for _ in range(dist.get_world_size())]
+                dist.all_gather(gathered_labels, classes)
+                all_labels.extend([labels.cpu().numpy() for labels in gathered_labels])
+            #have_finished_images += len(all_images) * batch_size
+            # print(th.mean(res.float()))
+            recons = recons.cpu().numpy()
+            for i in range(len(recons)):
+                if args.has_subfolder:
+                    recons_save_dir = os.path.join(args.recons_dir, paths[i].split("/")[-2])
+                    dire_save_dir = os.path.join(args.dire_dir, paths[i].split("/")[-2])
+                else:
+                    recons_save_dir = args.recons_dir
+                    dire_save_dir = args.dire_dir
+                fn_save = os.path.basename(paths[i])
+                os.makedirs(recons_save_dir, exist_ok=True)
+                os.makedirs(dire_save_dir, exist_ok=True)
+                cv2.imwrite(
+                    f"{dire_save_dir}/{fn_save}", cv2.cvtColor(dire[i].cpu().numpy().astype(np.uint8), cv2.COLOR_RGB2BGR)
+                )
+                cv2.imwrite(f"{recons_save_dir}/{fn_save}", cv2.cvtColor(recons[i].astype(np.uint8), cv2.COLOR_RGB2BGR))
+        have_finished_images += 16
         logger.log(f"have finished {have_finished_images} samples")
 
     dist.barrier()
