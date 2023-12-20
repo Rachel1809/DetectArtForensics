@@ -10,8 +10,8 @@ SAMPLE_FLAGS="--batch_size 16 --num_samples 3536  --timestep_respacing ddim20 --
 #SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/val/real --recons_dir /kaggle/working/dataset/recons/val/real --dire_dir /kaggle/working/dataset/dire/val/0_real"
 #SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/val/fake --recons_dir /kaggle/working/dataset/recons/val/fake --dire_dir /kaggle/working/dataset/dire/val/1_fake"
 
-#SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/train/real --recons_dir /kaggle/working/dataset/recons/train/real --dire_dir /kaggle/working/dataset/dire/train/0_real"
-SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/train/fake --recons_dir /kaggle/working/dataset/recons/train/fake --dire_dir /kaggle/working/dataset/dire/train/1_fake"
+SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/train/real --recons_dir /kaggle/working/dataset/recons/train/real --dire_dir /kaggle/working/dataset/dire/train/0_real"
+#SAVE_FLAGS="--images_dir /kaggle/working/dataset/images/train/fake --recons_dir /kaggle/working/dataset/recons/train/fake --dire_dir /kaggle/working/dataset/dire/train/1_fake"
 
 
 MODEL_FLAGS="--attention_resolutions 32,16,8 --class_cond False --diffusion_steps 1000 --dropout 0.1 --image_size 256 --learn_sigma True --noise_schedule linear --num_channels 256 --num_head_channels 64 --num_res_blocks 2 --resblock_updown True --use_fp16 False --use_scale_shift_norm True"
