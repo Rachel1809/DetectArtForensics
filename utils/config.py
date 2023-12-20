@@ -18,7 +18,7 @@ class DefaultConfigs(ABC):
     loadSize = 256
     cropSize = 224
     epoch = "latest"
-    num_workers = 20
+    num_workers = 4
     serial_batches = False
     isTrain = True
 
