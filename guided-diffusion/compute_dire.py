@@ -79,7 +79,7 @@ def main():
         imgs, out_dicts, paths = next(data)
         imgs = imgs[:batch_size]
         paths = paths[:batch_size]
-        if have_finished_images >= 1712:
+        if have_finished_images >= 3248:
             imgs = imgs.to(dist_util.dev())
             model_kwargs = {}
             if args.class_cond:
