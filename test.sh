@@ -5,6 +5,6 @@
 
 EXP_NAME="model_adm_imagenet"
 #CKPT="/kaggle/input/classifier-ckpt/lsun_iddpm.pth"
-CKPT="/kaggle/working/DetectArtForensics/dataset/exp/gray_101/ckpt/model_epoch_best.pth"
+CKPT="/kaggle/working/DetectArtForensics/dataset/exp/gray_50/ckpt/model_epoch_best.pth"
 DATASETS_TEST="dire"
 python test.py --gpus 0 --ckpt $CKPT --exp_name $EXP_NAME datasets_test $DATASETS_TEST
