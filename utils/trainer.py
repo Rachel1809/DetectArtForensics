@@ -105,7 +105,7 @@ class Trainer(BaseModel):
         if cfg.optim == "adam":
             self.optimizer = torch.optim.Adam(self.model.parameters(), lr=cfg.lr, betas=(cfg.beta1, 0.999))
         elif cfg.optim == "adamw":
-            self.optimizer = torch.optim.Adamw(self.model.parameters(), lr=cfg.lr, betas=(cfg.beta1, 0.999), weight_decay=5e-4)
+            self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=cfg.lr, betas=(cfg.beta1, 0.999), weight_decay=5e-4)
         elif cfg.optim == "sgd":
             self.optimizer = torch.optim.SGD(self.model.parameters(), lr=cfg.lr, momentum=0.9, weight_decay=5e-4)
         else:
