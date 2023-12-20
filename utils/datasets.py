@@ -25,6 +25,14 @@ def dataset_folder(root: str, cfg: CONFIGCLASS):
         return FileNameDataset(root, cfg)
     raise ValueError("cfg.mode needs to be binary or filename.")
 
+def to_grayscale_3channel(img):
+    # Convert the image to grayscale
+    gray_img = img.convert("L")
+
+    # Convert the grayscale image to RGB
+    rgb_img = Image.merge("RGB", (gray_img, gray_img, gray_img))
+
+    return rgb_img
 
 def binary_dataset(root: str, cfg: CONFIGCLASS):
     identity_transform = transforms.Lambda(lambda img: img)
@@ -49,11 +57,13 @@ def binary_dataset(root: str, cfg: CONFIGCLASS):
         transforms.Compose(
             [
                 rz_func,
+                transforms.Lambda(lambda img: to_grayscale_3channel(img)),
                 transforms.Lambda(lambda img: blur_jpg_augment(img, cfg)),
                 crop_func,
                 flip_func,
                 transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                #transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                transforms.Normalize(mean=[0.485, 0.485, 0.485], std=[0.229, 0.229, 0.229])
                 if cfg.aug_norm
                 else identity_transform,
             ]
