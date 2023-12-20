@@ -40,7 +40,7 @@ class DefaultConfigs(ABC):
     warmup_epoch = 3
     earlystop = True
     earlystop_epoch = 5
-    optim = "adam"
+    optim = "adamw"
     new_optim = False
     loss_freq = 400
     save_latest_freq = 2000
