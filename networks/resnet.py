@@ -184,29 +184,29 @@ def resnet50(pretrained=False, **kwargs):
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
-    # model.dropout1 = nn.Dropout2d(p=0.2)
-    # model.dropout2 = nn.Dropout2d(p=0.2)
+    model.dropout1 = nn.Dropout2d(p=0.2)
+    model.dropout2 = nn.Dropout2d(p=0.2)
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls["resnet50"]))
         
-    # def forward(self, x):
-    #     x = self.conv1(x)
-    #     x = self.bn1(x)
-    #     x = self.relu(x)
-    #     x = self.maxpool(x)
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
 
-    #     x = self.dropout1(self.layer1(x))
-    #     x = self.layer2(x)
-    #     x = self.dropout2(self.layer3(x))
-    #     x = self.layer4(x)
+        x = self.dropout1(self.layer1(x))
+        x = self.layer2(x)
+        x = self.dropout2(self.layer3(x))
+        x = self.layer4(x)
 
-    #     x = self.avgpool(x)
-    #     x = x.view(x.size(0), -1)
-    #     x = self.fc(x)
-    #     return x
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
+        return x
 
-    # # Bind the custom forward method to the model
-    # model.forward = forward.__get__(model, ResNet)
+    # Bind the custom forward method to the model
+    model.forward = forward.__get__(model, ResNet)
     
     return model
 

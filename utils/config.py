@@ -9,7 +9,7 @@ class DefaultConfigs(ABC):
     ####### base setting ######
     gpus = [0]
     seed = 3407
-    arch = "resnet101"
+    arch = "resnet50"
     datasets = ["zhaolian_train"]
     datasets_test = ["adm_res_abs_ddim20s"]
     mode = "binary"
