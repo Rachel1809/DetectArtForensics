@@ -189,7 +189,7 @@ def resnet50(pretrained=False, **kwargs):
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls["resnet50"]))
         
-    def forward(self, x):
+    def forward(self, x, meta):
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)
