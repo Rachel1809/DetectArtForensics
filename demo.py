@@ -36,6 +36,14 @@ elif os.path.isdir(args.file):
 else:
     raise FileNotFoundError(f"Invalid file path: '{args.file}'")
 
+def to_grayscale_3channel(img):
+    # Convert the image to grayscale
+    gray_img = img.convert("L")
+
+    # Convert the grayscale image to RGB
+    rgb_img = Image.merge("RGB", (gray_img, gray_img, gray_img))
+
+    return rgb_img
 
 model = get_network(args.arch)
 state_dict = torch.load(args.model_path, map_location="cpu")
@@ -50,6 +58,7 @@ print("*" * 50)
 
 trans = transforms.Compose(
     (
+        transforms.Lambda(lambda img: to_grayscale_3channel(img)),
         transforms.Resize(256),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
@@ -59,7 +68,7 @@ for img_path in tqdm(file_list, dynamic_ncols=True, disable=len(file_list) <= 1)
     img = Image.open(img_path).convert("RGB")
     img = trans(img)
     if args.aug_norm:
-        img = TF.normalize(img, mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        img = TF.normalize(img, mean=[0.485, 0.485, 0.485], std=[0.229, 0.229, 0.229])
     in_tens = img.unsqueeze(0)
     if not args.use_cpu:
         in_tens = in_tens.cuda()
